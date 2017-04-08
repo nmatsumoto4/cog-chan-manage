@@ -9,7 +9,17 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 // http://stackoverflow.com/a/34015469/988941
 import logo from './images/grid-list/00-52-29-429_640.jpg';
 import apple from './images/grid-list/apple.jpg';
-import { LineChart, Line ,XAxis,YAxis,CartesianGrid} from 'recharts';
+
+import {Tabs, Tab} from 'material-ui/Tabs';
+import Slider from 'material-ui/Slider';
+import CogRader from './pageComponents/cog_rader'
+import CogLineChart from './pageComponents/cog_line_chart'
+
+import { Grid,Row,Col } from 'react-bootstrap';
+var url = require('url')
+
+
+
 
 
 class Analyze extends Component {
@@ -31,6 +41,51 @@ class Analyze extends Component {
         overflowY: 'auto',
       },
     }
+    let config = {
+      endpoint:"https://cog-chan.documents.azure.com:443/",
+      primaryKey:"UmQNiAtzBFb1Gyh4gex7PI9y3IYZvwywlJYkzFli2EXSP9m9v1Yevp3mVAZB8IE8E79SGivy1BcOs8EOAf65IA==",
+      database:{
+        "id": "cog-chan"
+      },
+      collection:"cog-chan"
+
+    };
+
+
+    var documentClient = require("documentdb").DocumentClient;
+    let url = require('url');
+    let client = new documentClient(config.endpoint, { "masterKey": config.primaryKey });
+    var collectionUrl = `${databaseUrl}/colls/${config.collection.id}`;
+
+    var databaseUrl = `dbs/${config.database.id}`;
+    function queryCollection() {
+        console.log(`Querying collection through index:\n${config.collection.id}`);
+
+        return new Promise((resolve, reject) => {
+            client.queryDocuments(
+                collectionUrl,
+                'SELECT VALUE r.children FROM root r WHERE r.lastName = "Andersen"'
+            ).toArray((err, results) => {
+                if (err) reject(err)
+                else {
+                    for (var queryResult of results) {
+                        let resultString = JSON.stringify(queryResult);
+                        console.log(`\tQuery returned ${resultString}`);
+                    }
+                    console.log();
+                    resolve(results);
+                }
+            });
+        });
+    };
+
+
+    // ADD THIS PART TO YOUR CODE
+    //  queryCollection()
+    // ENDS HERE
+
+
+
     const tilesData = [
             {
               img: logo,
@@ -73,32 +128,41 @@ class Analyze extends Component {
               author: 'BkrmadtyaKarki',
             },
           ];
-  const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-    ];
+
 
 
 
     return (
+
       <div className="App">
         <div className="App-header">
-        <LineChart width={500} height={300} data={data}>
-         <XAxis dataKey="name"/>
-         <YAxis/>
-         <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-         <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
-        </LineChart>
 
-          <div >
-            <iframe style={styles.bot} src='https://webchat.botframework.com/embed/cog-chan?s=wy_FmcttsJE.cwA.NB8.rHDZrsR_MVXPFEEGLErY4-UIxJGjAyCycjhXJZ3VIW4'></iframe>
-          </div>
+
+        <Tabs>
+      <Tab label="会話記録" >
+        <div>
+        <Row >
+          <CogLineChart/>
+
+        </Row>
+        </div>
+      </Tab>
+      <Tab label="傾向" >
+        <CogRader />
+      </Tab>
+      <Tab
+        label="onActive"
+      >
+        <div>
+          <h2 >Tab Three</h2>
+          <p>
+            This is a third example tab.
+          </p>
+        </div>
+      </Tab>
+    </Tabs>
+
+
         </div>
       </div>
     );

@@ -16,17 +16,39 @@ import Paper from 'material-ui/Paper';
 import Timeline from './pages/timeline/main'
 import Analyze from './pages/analyze/main'
 
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+
 import RaisedButton from 'material-ui/RaisedButton';
 
-
+import axios from 'axios'
 import FlatButton from 'material-ui/FlatButton';
 
 class MoverTMMaster extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        open: true
-      };
+        open: true,
+        talkLogs:{
+          "id": "1",
+          "time": "2017年 4月 8日 土曜日 17時55分20秒 JST",
+          "question": "りんごはなんであかいの",
+          "answer": "りんごは赤い色の色素「アントシアニン」が多いからだよ",
+          "tag": "food",
+          "what": "りんご",
+          "emotion": ".3"
+          },
+        }
+
+  };
+  getTalkLog(){
+      // axios.defaults.baseURL = 'http://13.65.199.191:3000';
+      // axios.get('/api/v1/users')
+      // .then(res => {
+      //   console.log(res.data);
+      // })
+      // .catch(error => {
+      //   throw error
+      // })
   }
   getStyles(){
     const styles = {
@@ -39,7 +61,9 @@ class MoverTMMaster extends React.Component {
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
         minHeight: 400,
-        paddingLeft:350,
+        paddingTop:80,
+        paddingLeft:270,
+        paddingRight:320,
         position: 'relative',
       },
       content: {
@@ -81,13 +105,14 @@ class MoverTMMaster extends React.Component {
 
       logo: {
         cursor: 'pointer',
-        fontSize: 24,
+        fontSize: 36,
         color: typography.textFullWhite,
         lineHeight: `${spacing.desktopKeylineIncrement}px`,
         fontWeight: typography.fontWeightLight,
         backgroundColor: pink100,
         paddingLeft: spacing.desktopGutter,
         marginBottom: 8,
+        fontFamily: "Nikukyu",
       },
       authPage:{
       	paddingLeft:'35px',
@@ -95,7 +120,14 @@ class MoverTMMaster extends React.Component {
       	paddingTop:'35px',
       	paddingBottom:'50px',
         marginTop: '30px',
-      }
+      },
+      bot:{
+        position: 'fixed',
+        bottom: '0px',
+        right: '0px',
+        height: '90%',
+        width:'300px'
+      },
     };
     if (this.props.width === MEDIUM || this.props.width === LARGE) {
       styles.content = Object.assign(styles.content, styles.contentWhenMedium);
@@ -127,7 +159,7 @@ class MoverTMMaster extends React.Component {
   <Router>
     <div>
           <AppBar
-            title="MOVER"
+            title="コグちゃん"
             zDepth={1}
             style={styles.appBar}
           />
@@ -140,10 +172,17 @@ class MoverTMMaster extends React.Component {
 
           </Drawer>
           <div style={styles.root}>
-            <Route exact path="/" component={Timeline}/>
-            <Route exact path="/analyze" component={Analyze}/>
+            <Paper  zDepth={1} >
+              <Route exact path="/" component={Timeline}/>
+              <Route exact path="/analyze" component={Analyze}/>
+              <Route exact path="/"
+               render={() => <Timeline talkLogs = {this.state.talkLogs}/>} />
+            </Paper>
           </div>
-      </div>
+          <div >
+            <iframe style={styles.bot} src='https://webchat.botframework.com/embed/cog-chan?s=wy_FmcttsJE.cwA.NB8.rHDZrsR_MVXPFEEGLErY4-UIxJGjAyCycjhXJZ3VIW4'></iframe>
+          </div>
+  </div>
   </Router>
   )
  }

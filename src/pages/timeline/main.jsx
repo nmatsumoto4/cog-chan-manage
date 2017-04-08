@@ -9,10 +9,12 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 // http://stackoverflow.com/a/34015469/988941
 import logo from './images/grid-list/00-52-29-429_640.jpg';
 import apple from './images/grid-list/apple.jpg';
+import axios from 'axios'
+
+class Timeline extends Component {
 
 
 
-class App extends Component {
   render() {
     let styles = {
       bot:{
@@ -27,7 +29,7 @@ class App extends Component {
         // justifyContent: 'space-around',
       },
       gridList: {
-        width: 700,
+        width: 'auto',
         overflowY: 'auto',
       },
     }
@@ -74,6 +76,7 @@ class App extends Component {
             },
           ];
 
+    console.log(this.props.talkLogs);
 
 
     return (
@@ -87,6 +90,7 @@ class App extends Component {
             >
               {tilesData.map((tile) => (
                 <GridTile
+                  cols={1}
                   key={tile.img}
                   title={tile.title}
                   subtitle={<span>by <b>{tile.author}</b></span>}
@@ -98,13 +102,11 @@ class App extends Component {
             </GridList>
           </div>
 
-          <div >
-            <iframe style={styles.bot} src='https://webchat.botframework.com/embed/cog-chan?s=wy_FmcttsJE.cwA.NB8.rHDZrsR_MVXPFEEGLErY4-UIxJGjAyCycjhXJZ3VIW4'></iframe>
-          </div>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+
+export default Timeline;
