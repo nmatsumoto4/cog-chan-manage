@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MoverTMMaster from './MoverTMMaster';
+import MainRouter from './mainRouter';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import {cyan500} from 'material-ui/styles/colors';
 import {
    cyan700,
   pinkA200,
-  pink100,
-  grey100, grey300, grey400, grey500,
-  white, darkBlack, fullBlack,
+  pink100,pink50,
+
+  grey100, grey300, grey400, grey500,pink500,pink200,
+  white, darkBlack, fullBlack,yellow50
+
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
@@ -25,15 +27,16 @@ class App extends Component {
   render() {
     const muiTheme = getMuiTheme({
       palette: {
-        primary1Color: pink100,
-        primary2Color: pink100,
-        primary3Color: pink100,
-        accent1Color: pinkA200,
+        primary1Color: pink200,
+        primary2Color: pink200,
+        primary3Color: pink200,
+        accent1Color: pink200,
         accent2Color: grey100,
         accent3Color: grey500,
-        textColor: pinkA200,
+        textColor: pink500,
         alternateTextColor: white,
-        canvasColor: white,
+        canvasColor: pink50
+,
         borderColor: grey300,
         disabledColor: fade(darkBlack, 0.3),
         pickerHeaderColor: pink100,
@@ -44,7 +47,9 @@ class App extends Component {
 
     return (
           <MuiThemeProvider　muiTheme={muiTheme}>
-            <MoverTMMaster/>
+          <div style={{backgroundColor:pink50,height:'100%'}}>
+            <MainRouter/>
+          </div>
           </MuiThemeProvider>
     );
   }

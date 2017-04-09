@@ -56,18 +56,10 @@ class CogRader extends Component {
     return (
 
       <div style={styles.raderChart}>
-      <Row >
-      <Col md={8}>
-      <RadarChart cx={300} cy={250} outerRadius={150} width={600} height={500} data={data}>
-          <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="subject" />
-          <PolarRadiusAxis/>
-        </RadarChart>
-      </Col>
-      <Col md={4}>
-       <Paper>
-        <List>
+      <Row style={{marginLeft:30,marginTop:30 }}>
+      <Col md={3}>
+      <Paper style={{paddingRight:0 }}>
+        <List >
           <Subheader>よくしゃべる単語</Subheader>
            <ListItem
              primaryText="りんご"
@@ -93,6 +85,18 @@ class CogRader extends Component {
         </List>
         </Paper>
       </Col>
+      <Col md={8}>
+      <Paper >
+
+      <RadarChart cx={300} cy={250} outerRadius={150} width={600} height={500} data={data}>
+          <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" />
+          <PolarRadiusAxis/>
+        </RadarChart>
+      </Paper>
+      </Col>
+
       </Row>
       </div>
     );

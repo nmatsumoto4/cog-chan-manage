@@ -7,11 +7,13 @@ import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
-import { LineChart, Line ,XAxis,YAxis,CartesianGrid,Tooltip} from 'recharts';
+import { Legend,ResponsiveContainer,LineChart, Line ,XAxis,YAxis,CartesianGrid,Tooltip} from 'recharts';
 
 
+import Paper from 'material-ui/Paper';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
+import { Grid,Row,Col } from 'react-bootstrap';
 
 class CogLineChart extends Component {
   render() {
@@ -32,28 +34,58 @@ class CogLineChart extends Component {
         overflowY: 'auto',
       },
     }
-    const data = [
-        {name: '05/01', uv: 4000, pv: 2400, amt: 2400},
-        {name: '05/02', uv: 3000, pv: 1398, amt: 2210},
-        {name: '05/03', uv: 2000, pv: 9800, amt: 2290},
-        {name: '05/04', uv: 2780, pv: 3908, amt: 2000},
-        {name: '05/05', uv: 1890, pv: 4800, amt: 2181},
-        {name: '05/06', uv: 2390, pv: 3800, amt: 2500},
-        {name: '05/07', uv: 3490, pv: 4300, amt: 2100},
-      ];
+
+      let data = this.props.data;
+
+      const containerStyle = {
+        WebkitBoxSizing: 'border-box',
+        boxSizing: 'border-box',
+        padding: '8px',
+        width: '100%',
+        height: '250px',
+        maxHeight: '330px',
+        margin: '0 auto'
+      }
 
 
 
     return (
 
-      <div style={{textAlign:'center'}}>
-      <LineChart width={600} height={300} data={data}>
-       <XAxis dataKey="name"/>
-       <YAxis/>
+      <div style={{textAlign:'center',marginLeft:30,marginTop:10}}>
+
+      <Col md={11}>
+      <Paper>
+      <Row>
+        <Col md={1}/>
+        <Col md={1}>
+        <br/>
+        <br/>
+        <br/>
+        <div style={{writingMode:'tb-rl',direction:'ltr',textAlign:'center',fontSize:26}}>
+        </div>
+        </Col>
+        <Col md={8}>
+        <div style={containerStyle}>
+        <ResponsiveContainer>
+        <LineChart width={400} height={'60%'} data={data}>
+         <XAxis dataKey="name"  label="　　日付" name="hif"/>
+         <YAxis yAxisId="left" orientation="left" stroke="#8884d8"/>
+         <YAxis yAxisId="right" orientation="right" stroke="#82ca9d"/>
+         <Tooltip/>
+         <CartesianGrid strokeDasharray="3 3"/>
        <Tooltip/>
-       <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-       <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-      </LineChart>
+       <Legend align="center" verticalAlign="top"/>
+         <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+         <Line type="monotone" yAxisId="left" dataKey="単語数" stroke="#8884d8" />
+      <Line type="monotone" yAxisId="right" dataKey="感情" stroke="#82ca9d" />
+        </LineChart>
+        </ResponsiveContainer>
+        </div>
+        </Col>
+      </Row>
+      </Paper>
+      </Col>
+
       </div>
     );
   }
