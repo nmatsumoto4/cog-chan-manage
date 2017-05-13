@@ -37,13 +37,13 @@ class Timeline extends Component {
       this.state = {
         open: false,
         selectedTalkLog:{
-          answer:"",
-          emotion:"",
+          Answer:"",
+          Emotion:"",
           id:"",
-          question:"",
-          tag:"",
-          time:"",
-          what:"",
+          Question:"",
+          Tag:"",
+          Time:"",
+          What:"",
         },
       }
   }
@@ -113,15 +113,15 @@ class Timeline extends Component {
    }
 
    let emotion= (talkLog) => {
-      if (talkLog.emotion < 0.29) {
+      if (talkLog.Emotion < 0.29) {
         return (<i className="material-icons" style={{color:indigo500
           ,fontSize:50}}>sentiment_very_dissatisfied</i>)
       }
-      if (talkLog.emotion<0.6) {
+      if (talkLog.Emotion<0.6) {
         return (<i className="material-icons" style={{color:lime500
           ,fontSize:50}}>sentiment_neutral</i>)
       }
-      if (talkLog.emotion<1.0) {
+      if (talkLog.Emotion<1.0) {
         return (<i className="material-icons" style={{color:pink500
           ,fontSize:50}}>sentiment_very_satisfied</i>)
       }
@@ -187,11 +187,11 @@ class Timeline extends Component {
                 <GridTile
                   cols={1}
                   key={talkLog.id}
-                  title={talkLog.question}
-                  subtitle={talkLog.time}
+                  title={talkLog.Question}
+                  subtitle={talkLog.Time}
                   actionIcon={emotionIconButton(talkLog)}
                 >
-                  <img  src={imgName(talkLog.what)} />
+                  <img  src={imgName(talkLog.What)} />
                 </GridTile>
               ))}
             </GridList>
@@ -199,13 +199,13 @@ class Timeline extends Component {
 
         </div>
         <Dialog
-          title={this.state.selectedTalkLog.question}
+          title={this.state.selectedTalkLog.Question}
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose.bind(this)}
         >
-          コグちゃんの返答：{this.state.selectedTalkLog.answer}
+          コグちゃんの返答：{this.state.selectedTalkLog.Answer}
           <br/>
           <br/>
           それに対するタカシ君の感情：{emotion(this.state.selectedTalkLog)}
