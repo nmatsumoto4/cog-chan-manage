@@ -140,8 +140,9 @@ class MoverTMMaster extends React.Component {
           axios.defaults.baseURL = 'https://cogchanfunction.azurewebsites.net';
           axios.get('/api/MotherDisplayMain?code=ht9qOca4C3H2RpIwEzJe4FvJ4tFr0yteXKQZJtMbLG9AqctSyb1L6A==')
           .then(res => {
+            console.log(res.data.cogs);
             this.setState({
-              talkLogs:res.data
+              talkLogs:res.data.cogs
             })
           })
           .catch(error => {
